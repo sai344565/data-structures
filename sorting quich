@@ -1,0 +1,114 @@
+#include<stdio.h>
+void quickSort(int[], int, int);
+int  partition(int[], int, int);
+void swap(int*, int*);
+int main()
+{
+    int n,i;
+    printf("Enter Array Size\n");
+    scanf("%d",&n);
+    int arr[n];
+    printf("Enter Array Elements\n");
+    for(i=0;i<n;i++)
+	scanf("%d",&arr[i]);
+    quickSort(arr,0,n-1);
+    printf("After the QuickSort\n");
+    for(i=0;i<n;i++)
+	printf("%d ",arr[i]);
+    printf("\n");
+    return 0;
+}
+void quickSort(int arr[], int start, int end)
+{
+    if(start < end)
+    {
+        int pIndex = partition(arr, start, end);
+        quickSort(arr, start, pIndex-1);
+        quickSort(arr, pIndex+1, end);
+    }
+}
+int partition(int arr[], int start, int end)
+{
+    int pIndex = start;
+    int pivot = arr[end];
+    int i;
+    for(i = start; i < end; i++)
+    {
+        if(arr[i] < pivot)
+        {
+            swap(&arr[i], &arr[pIndex]);
+            pIndex++;
+        }
+    }
+    swap(&arr[end], &arr[pIndex]);
+    return pIndex;
+}
+void swap(int *x, int *y)
+{
+    int t = *x;
+    *x = *y;
+    *y = t;
+}
+
+
+#include<stdio.h>
+void heapify(int*,int, int);
+void heapsort(int*, int);
+void print_array(int*, int);
+intmain()
+{
+    int arr[] = { 10, 30, 5, 63, 22, 12, 56, 33 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+    printf("\nArray before sorting:\n");
+    print_array(arr, n);
+    heapsort(arr, n);
+    printf("\n\nArray after sorting:\n");
+    print_array(arr, n);
+    return 0;
+}
+void heapsort(int* arr, int n)
+{
+    for (int i = n / 2 - 1; i >= 0; i--)
+    {
+        heapify(arr, n, i);
+    }
+
+
+    for (int i = n - 1; i >= 0; i--)
+    {
+        int temp = arr[i];
+        arr[i] = arr[0];
+        arr[0] = temp;
+        heapify(arr, i, 0);
+    }
+}
+void heapify(int* arr, int n, int i)
+{
+    int largest = i;
+    int left = 2 * i + 1;
+    int right  = 2 * i + 2;
+    if (left < n && arr[left] > arr[largest])
+    {
+        largest = left;
+    }
+
+    if (right < n && arr[right] > arr[largest])
+    {
+        largest = right;
+    }
+    if (largest != i)
+    {
+        int temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
+        heapify(arr, n, largest);
+    }
+}
+
+void print_array(int* arr, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d  ", arr[i]);
+    }
+}
